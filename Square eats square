@@ -1,0 +1,80 @@
+#Переменные
+#Координаты большого квадрата
+x = 250
+y = 250
+#Координаты маленького квадрата
+xr = random(100, 400)
+yr = random(100, 400)
+#Цвет
+r = random(0,255)
+g = random(0,255)
+b = random(0,255)
+#Менее важные переменные
+speed = 15
+score = 0
+#Время
+start = second()
+timer = second() - start
+
+def setup():
+    size (500, 500)
+    rectMode(CENTER)
+    textSize(30)
+    
+def face():
+    fill(0)
+    rect(x,y,50,50)
+    
+def food():
+    global xr, xy, r, g, b
+    fill(r,g,b)
+    rect(xr + 20, yr + 20 ,10,10)
+    
+#Движение    
+def keyPressed():
+    global x, y, speed
+    if keyPressed and key == "W" or key == "w":
+        y -= speed
+    if keyPressed and key == "S" or key == "s":
+        y += speed
+    if keyPressed and key == "D" or key == "d":
+        x += speed
+    if keyPressed and key == "A" or key == "a":
+        x -= speed
+
+def draw():
+    global x, y, xr, yr, r, g, b, score, start, timer
+   
+    background(255)
+    face()
+    food()
+    
+    #Создание проверки на касание
+    if x > 500 - ((500 - xr)+ 30) and x < (500 -(500 - xr)+ 45) and y > 500 - ((500 - yr)+ 30) and y < (500 -(500 - yr)+ 45):
+        score += 1
+        xr = random(100, 400)
+        yr = random(100, 400)
+        r = (random(0,255))
+        g = (random(0,255))
+        b = (random(0,255))
+        food()
+
+    #Создание рамок
+    if x >= 500 - 25:
+        x = 500 - 25
+    elif x <= 0 + 25:
+        x = 25
+    if y >= 500 - 25:
+        y = 500 - 25
+    elif y <= 0 + 25:
+        y = 25
+        
+    #Исправление бага
+    if xr >= x + 50 and xr <= x - 50:
+        xr = random(100, 400)
+    if yr >= y + 50 and yr <= y - 50:
+        yr = random(100, 400)
+    
+    #Счёт    
+    fill(126)
+    text("Score: " + str (score), 10, 30)
