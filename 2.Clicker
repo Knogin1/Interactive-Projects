@@ -1,0 +1,97 @@
+#Переменные
+score = 0
+sc = 1
+ss = 0
+sps = 0
+costCl = 10
+costS = 100
+frame = 0
+
+#
+def setup():
+    size(500,500)
+    ellipseMode(CENTER)
+    rectMode(CENTER)
+    frameRate(60)
+    
+def draw():
+    global score, sc, ss, costCl, costS,frame,sps
+    fill(255)
+    background(126)
+    
+    #Показ силы клика и счёта в секунду
+    textSize(15)
+    fill(0)
+    text("Click power: " + str(sc), 10, 55)
+    text("Score per second: " + str(sps), 10, 75)
+    
+    #Кнопка
+    ellipse(250,250, 100,100)
+    
+    #Счёт
+    textSize(25)
+    text("score: " + str(score), 10,25)
+    
+    #Увеличение счёта в секунду
+    frame+=1
+    if frame == 60:
+        score += ss
+        frame = 0
+ 
+    #"Магазин"
+    #+ к клику
+    #Внешний вид
+    stroke(0)
+    fill(255)
+    rect(475, 25, 50, 50)
+    noStroke()
+    fill(0, 255, 0)
+    triangle(460, 20, 490, 20, 475, 5)
+    rect(475, 30, 15,25)
+    #Цена
+    fill(0)
+    textSize(20)
+    text("Cost: " + str(costCl), 340,35)
+    
+    #+ в секунду
+    #Внешний вид
+    stroke(0)
+    fill(255)
+    rect(475, 80, 50, 50)
+    
+    noStroke()
+    fill(0, 255, 0)
+    triangle(460, 75, 490, 75, 475, 60)
+    rect(475, 85, 15,25)
+    
+    stroke(0)
+    fill(255)
+    ellipse(485,90,15,15)
+    fill(0)
+    rect(485,90, 5, 1)
+    rect(485,90, 1, 5)
+    
+    #Цена
+    fill(0)
+    textSize(20)
+    text("Cost: " + str(costS), 340,85)
+            
+def mouseClicked():
+    #Проверка клика
+    #Клик по кнопке
+    global score, sc, ss, costCl, costS, sps
+    if mouseX >= 250 - 50 and mouseX <= 250+50 and mouseY >= 250 - 50 and mouseY <= 250+50:
+        score = score + sc
+    
+    #Клик по верхней иконке магазина (+ за клик)
+    if mouseX >= 475 - 25 and mouseX <= 475 + 25 and mouseY >= 25 - 25 and mouseY <= 25+25:
+        score = score - costCl
+        sc+=1
+        costCl += 5
+    
+    #Клик по нижней иконке магазина (+ в секунду)
+    if score >= costS and mouseX >= 475 - 25 and mouseX <= 475 + 25 and mouseY >= 80 - 25 and mouseY <= 80+25:
+        score = score - costS
+        ss += 1
+        costS += 20
+        sps += 1
