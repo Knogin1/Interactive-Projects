@@ -1,0 +1,36 @@
+MENU = True
+mouse = True
+
+def setup():
+    fullScreen()
+    rectMode(CENTER)
+    noStroke()
+    noCursor()
+    
+def draw():
+    global MENU, mouse
+    if mouse == True:
+        x = mouseX
+        y = mouseY
+    background(0)
+    
+    if MENU == True:
+        background(0)
+        if mousePressed:
+            MENU = False
+    
+    #Уровень 1
+    fill (0,200,255)
+    rect(width/2,height/2, 466,668)
+    rect((width/2)+(width-1000), height-684, 266,68)
+    fill(255,0,0)
+    rect((width/2)+(width-900), height-684, width-1500,height-700)
+
+    #Проверки на касание стен
+    if mouse == True and x >= width/2+233-5:
+        x=width/2+233-5
+        
+
+    #Квадратик - игрок
+    fill(10,16,255)
+    rect(x,y, 10,10)
